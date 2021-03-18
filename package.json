@@ -24,7 +24,7 @@
     "sqlite": "^3.0.3"
   },
   "scripts": {
-    "install": "prebuild-install || npm run build-release",
+    "install": "npm run build-release",
     "build-release": "node-gyp rebuild --release",
     "build-debug": "node-gyp rebuild --debug",
     "rebuild-release": "npm run lzz && npm run build-release",
