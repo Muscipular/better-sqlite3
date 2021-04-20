@@ -69,13 +69,12 @@
             '-licudt.lib',
             '-licuin.lib',
             '-licuio.lib',
-            '-licutest.lib',
             '-licutu.lib',
             '-licuuc.lib',
           ],
           'library_dirs': [
             '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/<(openssl_root)',
-            '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/<(icu_root)'
+            '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/<(icu_root)/lib'
           ]
         }
       },
@@ -140,23 +139,18 @@
           'include_dirs': [
             '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/',
             '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/openssl-include/',
-            './icu/sources/common/',
-            './icu/sources/i18n/'
+            '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/>(icu_root)/include/',
           ]
         },
         "OS == \"mac\"", {
           'include_dirs': [
             '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/',
             '>(openssl_root)/include',
-            './icu/sources/common/',
-            './icu/sources/i18n/'
           ]
         },
         { # linux
           'include_dirs': [
             '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/',
-            './icu/sources/common/',
-            './icu/sources/i18n/'
           ]
         }]
       ],
