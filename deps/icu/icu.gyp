@@ -258,6 +258,7 @@
                       }
                     }, # Debug
                     'Release': {
+                      'msvs_settings': {
                         'VCCLCompilerTool': {
                           'RuntimeTypeInfo': 'true',
                         },
@@ -365,6 +366,7 @@
                   }
                 }, # Debug
                 'Release': {
+                  'msvs_settings': {
                     'VCCLCompilerTool': {
                       'RuntimeTypeInfo': 'true',
                     },
