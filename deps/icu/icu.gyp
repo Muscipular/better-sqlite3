@@ -9,7 +9,7 @@
   'variables': {
     'v8_host_byteorder%': '<!(python -c "import sys; print sys.byteorder")',
     'use_system_icu%': 0,
-    'icu_use_data_file_flag%': 0,
+    'icu_use_data_file_flag%': 1,
     'want_separate_host_toolset%': 1,
   },
   'target_defaults': {
@@ -248,6 +248,23 @@
                     ],
                   },
                 }], # OS!=ios
+                ['OS=="win"', {
+                  'configurations': {
+                    'Debug': {
+                      'msvs_settings': {
+                        'VCCLCompilerTool': {
+                          'RuntimeTypeInfo': 'true',
+                        },
+                      }
+                    }, # Debug
+                    'Release': {
+                        'VCCLCompilerTool': {
+                          'RuntimeTypeInfo': 'true',
+                        },
+                      },
+                    }, # Release
+                  }, # configurations
+                } ], # OS=="win"
               ], # conditions
             }], # icu_use_data_file_flag
           ], # conditions
@@ -338,6 +355,23 @@
                 },
               },
             }],
+            ['OS=="win"', {
+              'configurations': {
+                'Debug': {
+                  'msvs_settings': {
+                    'VCCLCompilerTool': {
+                      'RuntimeTypeInfo': 'true',
+                    },
+                  }
+                }, # Debug
+                'Release': {
+                    'VCCLCompilerTool': {
+                      'RuntimeTypeInfo': 'true',
+                    },
+                  },
+                }, # Release
+              }, # configurations
+            } ], # OS=="win"
           ], # conditions
         },
         {
