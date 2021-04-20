@@ -25,7 +25,10 @@
       }
     },
     'msvs_settings': {
-      'VCCLCompilerTool': {
+      'VCCLCompilerTool': { 
+        'AdditionalOptions': [
+          '/utf-8'
+        ],
       },
       'VCLibrarianTool': {
       },

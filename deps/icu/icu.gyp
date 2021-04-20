@@ -9,7 +9,7 @@
   'variables': {
     'v8_host_byteorder%': '<!(python -c "import sys; print sys.byteorder")',
     'use_system_icu%': 0,
-    'icu_use_data_file_flag%': 1,
+    'icu_use_data_file_flag%': 0,
     'want_separate_host_toolset%': 1,
   },
   'target_defaults': {
@@ -34,6 +34,18 @@
       # Will cut down the code size.
       'U_CHARSET_IS_UTF8=1',
     ],
+    'msvs_settings': {
+      'VCCLCompilerTool': {      
+        'AdditionalOptions': [
+          '/utf-8',
+          '/std:c++17',
+        ],
+      },
+      'VCLibrarianTool': {
+      },
+      'VCLinkerTool': {
+      },
+    },
     'conditions': [
       ['component=="static_library"', {
         'defines': [
@@ -485,6 +497,24 @@
                 },
               },
             }],
+            ['OS=="win"', {
+              'configurations': {
+                'Debug': {
+                  'msvs_settings': {
+                    'VCCLCompilerTool': {
+                      'RuntimeTypeInfo': 'true',
+                    },
+                  }
+                }, # Debug
+                'Release': {
+                  'msvs_settings': {
+                    'VCCLCompilerTool': {
+                      'RuntimeTypeInfo': 'true',
+                    },
+                  },
+                }, # Release
+              }, # configurations
+            } ], # OS=="win"
           ], # conditions
         },
       ], # targets
