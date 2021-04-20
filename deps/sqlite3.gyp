@@ -45,14 +45,17 @@
           ['target_arch == "ia32"', {
             'variables': {
               'openssl_root%': 'OpenSSL-Win32',
+              'icu_root%': 'icu',
             }
           }, 'target_arch == "arm64"', {
             'variables': {
               'openssl_root%': 'OpenSSL-Win64-ARM',
+              'icu_root%': 'icu',
             }
           }, {
             'variables': {
               'openssl_root%': 'OpenSSL-Win64',
+              'icu_root%': 'icu64',
             }
           }]
         ],
@@ -62,10 +65,17 @@
             '-llibssl.lib',
             # The two libs below are needed for the Electron build to succeed
             '-lws2_32.lib',
-            '-lcrypt32.lib'
+            '-lcrypt32.lib',
+            '-licudt.lib',
+            '-licuin.lib',
+            '-licuio.lib',
+            '-licutest.lib',
+            '-licutu.lib',
+            '-licuuc.lib',
           ],
           'library_dirs': [
-            '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/<(openssl_root)'
+            '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/<(openssl_root)',
+            '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/<(icu_root)'
           ]
         }
       },
@@ -76,9 +86,16 @@
         'link_settings': {
           'libraries': [
             # This statically links libcrypto, whereas -lcrypto would dynamically link it
-            '<(openssl_root)/lib/libcrypto.a'
+            '<(openssl_root)/lib/libcrypto.a',
+            "<!@(/usr/local/opt/icu4c/bin/icu-config --ldflags)",
           ]
-        }
+        },
+        "cflags": ["<!(/usr/local/opt/icu4c/bin/icu-config --cppflags)"],
+        "xcode_settings": {
+          "OTHER_CFLAGS": [
+            "<!(/usr/local/opt/icu4c/bin/icu-config --cppflags)",
+          ],
+        },
       },
       { # Linux
         'link_settings': {
@@ -146,8 +163,9 @@
 
       'dependencies': [
         'action_before_build',
-        "./icu/icu.gyp:icuuc",
-        "./icu/icu.gyp:icui18n"
+#         "./icu/icu-generic.gyp:icudata",
+#         "./icu/icu-generic.gyp:icuuc#target",
+#         "./icu/icu-generic.gyp:icui18n#target",
       ],
       'sources': [
         '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/sqlite3.c',
