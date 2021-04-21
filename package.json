@@ -10,11 +10,9 @@
     "url": "git://github.com/JoshuaWise/better-sqlite3.git"
   },
   "dependencies": {
-    "bindings": "^1.5.0",
-    "prebuild-install": "^5.3.3",
-    "tar": "^6.0.5"
   },
   "devDependencies": {
+    "tar": "^6.0.5",
     "chai": "^4.2.0",
     "cli-color": "^2.0.0",
     "fs-extra": "^8.1.0",
