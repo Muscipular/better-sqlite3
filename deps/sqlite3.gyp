@@ -86,8 +86,10 @@
           'libraries': [
             # This statically links libcrypto, whereas -lcrypto would dynamically link it
             '<(openssl_root)/lib/libcrypto.a',
-            "<!@(/usr/local/opt/icu4c/bin/icu-config --ldflags)",
-          ]
+            "/usr/local/Cellar/icu4c/68.2/lib/libicui18n.a",
+            "/usr/local/Cellar/icu4c/68.2/lib/libicuuc.a",
+            "/usr/local/Cellar/icu4c/68.2/lib/libicudata.a",
+          ],
         },
         "cflags": ["<!(/usr/local/opt/icu4c/bin/icu-config --cppflags)"],
         "xcode_settings": {
