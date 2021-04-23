@@ -45,17 +45,17 @@
           ['target_arch == "ia32"', {
             'variables': {
               'openssl_root%': 'OpenSSL-Win32',
-              'icu_root%': 'icu',
+              'icu_root%': 'icu-win64',
             }
           }, 'target_arch == "arm64"', {
             'variables': {
               'openssl_root%': 'OpenSSL-Win64-ARM',
-              'icu_root%': 'icu',
+              'icu_root%': 'icu-win64',
             }
           }, {
             'variables': {
               'openssl_root%': 'OpenSSL-Win64',
-              'icu_root%': 'icu64',
+              'icu_root%': 'icu-win64',
             }
           }]
         ],
@@ -66,15 +66,15 @@
             # The two libs below are needed for the Electron build to succeed
             '-lws2_32.lib',
             '-lcrypt32.lib',
-            '-licudt.lib',
-            '-licuin.lib',
-            '-licuio.lib',
-            '-licutu.lib',
-            '-licuuc.lib',
+            '-lsicudt.lib',
+            '-lsicuin.lib',
+#             '-lsicuio.lib',
+#             '-lsicutu.lib',
+            '-lsicuuc.lib',
           ],
           'library_dirs': [
             '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/<(openssl_root)',
-            '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/<(icu_root)/lib'
+            '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/<(icu_root)'
           ]
         }
       },
@@ -86,17 +86,17 @@
           'libraries': [
             # This statically links libcrypto, whereas -lcrypto would dynamically link it
             '<(openssl_root)/lib/libcrypto.a',
-            "/usr/local/Cellar/icu4c/68.2/lib/libicui18n.a",
-            "/usr/local/Cellar/icu4c/68.2/lib/libicuuc.a",
-            "/usr/local/Cellar/icu4c/68.2/lib/libicudata.a",
+            "<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/icu-macos/libicui18n.a",
+            "<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/icu-macos/libicuuc.a",
+            "<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/icu-macos/libicudata.a",
           ],
         },
-        "cflags": ["<!(/usr/local/opt/icu4c/bin/icu-config --cppflags)"],
-        "xcode_settings": {
-          "OTHER_CFLAGS": [
-            "<!(/usr/local/opt/icu4c/bin/icu-config --cppflags)",
-          ],
-        },
+#         "cflags": ["<!(/usr/local/opt/icu4c/bin/icu-config --cppflags)"],
+#         "xcode_settings": {
+#           "OTHER_CFLAGS": [
+#             "<!(/usr/local/opt/icu4c/bin/icu-config --cppflags)",
+#           ],
+#         },
       },
       { # Linux
         'link_settings': {
@@ -141,12 +141,13 @@
           'include_dirs': [
             '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/',
             '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/openssl-include/',
-            '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/>(icu_root)/include/',
+            '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/icu-include/',
           ]
         },
         "OS == \"mac\"", {
           'include_dirs': [
             '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/',
+            '<(SHARED_INTERMEDIATE_DIR)/sqlcipher-amalgamation-<@(sqlite_version)/icu-include/',
             '>(openssl_root)/include',
           ]
         },
@@ -210,6 +211,7 @@
         'SQLITE_ENABLE_GEOPOLY',
         'SQLITE_INTROSPECTION_PRAGMAS',
         'SQLITE_SOUNDEX',
+        'U_STATIC_IMPLEMENTATION',
         ],
       },
       'cflags_cc': [
@@ -254,6 +256,7 @@
         'SQLITE_ENABLE_GEOPOLY',
         'SQLITE_INTROSPECTION_PRAGMAS',
         'SQLITE_SOUNDEX',
+        'U_STATIC_IMPLEMENTATION',
       ],
       'export_dependent_settings': [
         'action_before_build',
